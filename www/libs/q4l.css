@@ -1,0 +1,294 @@
+	.ui-li-thumb, .ui-li-icon {
+	    left: 1px;
+	    max-height: 80px; 
+	    max-width: 80px; 
+	    position: absolute;
+	    top: 0; 
+    }
+    
+    .flex-control-nav {
+    	display: none !important;
+	}
+	
+	.nav_bar {
+		background:url('images/Android_UI/Nav_Bar.png');
+		background-repeat:repeat-x;
+		width: 100%;
+		height: 44px;
+		
+	}
+	
+	.back_button {
+		background:url('images/Android_UI/Back_Button.png');
+		display: block;
+		width: 42px;
+		height: 42px;
+	}
+	
+	.cancel_button {
+		background:url('images/Android_UI/Cancel_Button.png');
+		display: block;
+		width: 42px;
+		height: 42px;
+	}
+	
+	.edit_button {
+		background:url('images/Android_UI/Edit_Button.png');
+		display: block;
+		width: 42px;
+		height: 42px;
+	}
+	
+	.info_icon {
+		background:url('images/Android_UI/Info_Icon.png');
+		display: block;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.showMenu {
+		background:url('images/Android_UI/Menu_Button.png');
+		display: block;
+		width: 44px;
+		height: 42px;
+	}
+	
+	.menu_button {
+		background:url('images/Android_UI/Menu_Button.png');
+		display: block;
+		width: 44px;
+		height: 42px;
+	}
+	
+	.next_button {
+		background:url('images/Android_UI/Next_Button.png');
+		display: block;
+		width: 42px;
+		height: 42px;
+	}
+	
+	.done_button {
+		background:url('images/Android_UI/Done_Button.png');
+		display: block;
+		width: 42px;
+		height: 42px;
+	}
+	
+	.c1_1
+	{
+		font-family:Helvetica;
+		font-size:20px;
+		color:#ffffff;
+		font-weight: bold;
+	}
+	
+	.c4_3
+	{
+		font-size:15px; 
+		font-weight: bold; 
+		color: #000000;
+	}
+	
+	.c4_4
+	{
+		font-size:15px; 
+		color: #000000;
+	}
+	
+	.c5_5
+	{
+		font-family:Helvetica;
+		font-size:17px;
+		color:#000000;
+		font-weight: bold;
+	}
+	
+	.c5_7
+	{
+		font-family:Helvetica;
+		font-size:13px;
+		color:#000000;
+	}
+	
+	.c6_2
+	{
+		font-family:Helvetica;
+		font-size:30px;
+		color:#ffffff;
+		font-weight: bold;
+	}
+	
+	.c6_3
+	{
+		font-family:Helvetica;
+		font-size:92px;
+		color:#000000;
+		font-weight: bold;
+	}
+	
+	.c6_5
+	{
+		font-family:Helvetica;
+		font-size:25px;
+		color:#FFFFFF;
+		font-weight: bold;
+	}
+	
+	.c6_8
+	{
+		font-family:Helvetica;
+		font-size:12px;
+		color:#000000;
+		font-weight: bold;
+	}
+	
+	.c6_10
+	{
+		font-family:Helvetica;
+		font-size:18px;
+		color:#E0884C;
+		font-weight: bold;
+	}
+	
+	.c6_11
+	{
+		font-family:Helvetica;
+		font-size:12px;
+		color:#000000;
+	}
+	
+	.c6_13
+	{
+		font-family:Helvetica;
+		font-size:50px;
+		color:#FFFFFF;
+		font-weight: bold;
+	}
+	
+	.c6_15
+	{
+		font-family:Helvetica;
+		font-size:15px;
+		color:#000000;
+		font-weight: bold;
+	}
+	
+	.c6_16
+	{
+		font-family:Helvetica;
+		font-size:14px;
+		color:#000000;
+		font-weight: bold;
+	}
+	
+	.dashed_line
+	{
+		min-width: 40px;
+    	position:relative;
+    	bottom:2px;
+ 		border-bottom:1px dotted #54616E;
+ 		overflow:hidden;
+	}
+	
+	.dashed_line_2x
+	{
+		min-width: 80px;
+    	position:relative;
+    	bottom:2px;
+ 		border-bottom:1px dotted #54616E;
+ 		overflow:hidden;
+	}
+	
+	.c3_3
+	{
+		font-family:Helvetica;
+		font-size:32px;
+		color:#46742C;
+		font-weight: bold;
+	}
+	
+	.c3_4
+	{
+		font-family:Helvetica;
+		font-size:18px;
+		color:#505D69;
+		font-weight: bold;
+	}
+	
+	
+	.c6_18
+	{
+		font-family:Helvetica;
+		font-size:18px;
+		color:#46742C;
+		font-weight: bold;
+	}
+	
+	.c6_19
+	{
+		font-family:Helvetica;
+		font-size:12px;
+		color:#000000;
+	}
+	
+	.c6_20
+	{
+		font-family:Helvetica;
+		font-size:12px;
+		color:#993333;
+		font-weight: bold;
+	}
+	
+	.c6_22
+	{
+		font-family:Helvetica;
+		font-size:55px;
+		color:#5C994F;
+		font-weight: bold;
+	}
+	
+	.c6_26
+	{
+		font-family:Helvetica;
+		font-size:13px;
+		color:#000000;
+		font-weight: bold;
+	}
+	
+	.c7_2
+	{
+		font-family:Helvetica;
+		font-size:20px;
+		color:#46742C;
+		font-weight: bold;
+	}
+	
+	.c8_0
+	{
+		font-family:Helvetica;
+		font-size:12px;
+		color:#000000;
+		font-weight: bold;
+	}
+	
+	.c8_2
+	{
+		font-family:Helvetica;
+		font-size:13px;
+		color:#8A8A8A;
+		font-weight: bold;
+	}
+	
+	.c8_6
+	{
+		font-family:Helvetica;
+		font-size:12px;
+		color:#993333;
+	}
+	.c11_6
+	{
+		font-family:Helvetica;
+		font-size:12px;
+		color:#000000;
+		font-weight: bold;
+	}

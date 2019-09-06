@@ -1,0 +1,20 @@
+<table class="nav_bar">
+		<tr align="center">
+			    <td width="44" ><a href="#mainQuitDashBoardView" data-theme="" class="back_button"> </a></td>
+			    <td><span class="c1_1" >Contacts</span></td>
+			    <td width="44" ></td>
+		    </tr>
+	    </table>
+<div align="center">	
+<ul data-role="listview" data-inset="true" data-theme="d" data-bind="foreach: contactsList">
+    <li>
+    <table>
+    	<tr>
+    	<td><span>Name: </span><span data-bind="text: displayName" /></td></tr>
+    	<tr><td>
+    	<table data-bind="foreach: phoneNumbers" ><tr><td><span data-bind="text: type" > </span><span data-bind="text: value" /></td></tr></table>
+    	</td></tr>
+    </table>
+    </li>
+</ul>
+</div>

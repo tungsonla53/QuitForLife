@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Q4L Mobile</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<link href="libs/jquery.mobile-1.2.0.min.css" rel="stylesheet" type="text/css" />
+	<script src="cordova-2.7.0.js" type="text/javascript" charset="utf-8" ></script>
+	<script src="libs/jquery-1.8.2.min.js" type="text/javascript"></script>
+	<script language=javascript>
+	    $(document).bind("mobileinit", function () {
+	        $.mobile.ajaxEnabled = false;
+	        $.mobile.defaultPageTransition = 'none';
+	        $.mobile.defaultDialogTransition = 'none';
+	        $.mobile.useFastClick = true;
+	        $.mobile.allowCrossDomainPages = true;
+	    });
+ 	</script>
+	<script src="libs/jquery.mobile-1.2.0.min.js" type="text/javascript"></script>
+    <link href="libs/flexslider.css" rel="stylesheet" type="text/css" media="screen" />
+	<script src="libs/jquery.flexslider.js" type="text/javascript"></script>
+	<link href="libs/menu.css" rel="stylesheet" type="text/css" />
+	<script src="libs/statusbarnotification.js" type="text/javascript"></script>
+	<script src="libs/LocalNotification.js" type="text/javascript"></script>
+	<script src="libs/dFormat.js" type="text/javascript"></script>
+	<script src="libs/knockout-2.1.0.debug.js" type="text/javascript"></script>
+	<script src="libs/PushNotification.js" type="text/javascript"></script>
+	<script src="libs/MusicPlayerLauncher.js" type="text/javascript"></script>
+	<script src="libs/analytics.js" type="text/javascript"></script>
+	<script src="AppModels.js" type="text/javascript"></script>
+	<script src="viewModels/MenuViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/QuitTipsViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/DetailTipViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/PreQuitDashBoardViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/PickDateViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/SetReasonToQuitViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/SetCostSavingViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/CongratulationsViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/ConfirmQuitDateViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/SetNotificationsViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/ToolsViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/AboutViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/AboutProgramViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/TermsViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/SetNotificationsViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/SendFeedbackViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step1CompletedViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step2CompletedViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step3CompletedViewModel.js" type="text/javascript"></script>
+    <script src="AppViewModel.js" type="text/javascript"></script>
+    <link href="q4l_ios.css" rel="stylesheet" type="text/css" />
+</head>
+
+<script>
+function onDeviceReady() {
+
+    $(document).ready(function () {
+
+    	try {
+        	window.plugins.analytics.trackViews(document);
+           	window.plugins.analytics.trackPageView("/prequitdashboard.html");
+    	} catch (ex) { console.log(ex); }
+    	
+        AppViewModel.initialize();
+		AppViewModel.currentReturnViewUrl('#mainQuitDashBoardView');
+        ko.applyBindings(new PreQuitDashBoardViewModel(AppViewModel), $('#mainQuitDashBoardView')[0]);
+        $('.flexslider').flexslider({
+            animation: "slide",
+            slideshow: false,
+            animationLoop: false,
+            itemWidth: 144,
+            itemMargin: 1,
+            minItems: 2,
+            maxItems: 2
+        });
+
+        ko.applyBindings(new QuitTipsViewModel(AppViewModel), $('#quitTipsView')[0]);
+        ko.applyBindings(new MenuViewModel(), $('#menuView')[0]);
+
+
+        $('#pickDateView').load('templateViews/pickDateView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        });
+
+        $('#editCostView').load('templateViews/editCostView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        });
+
+        $('#setCostSavingView').load('templateViews/setCostSavingView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        });
+
+        $('#editReasonsView').load('templateViews/editReasonsView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        });
+
+        $('#setReasonToQuitView').load('templateViews/setReasonToQuitView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        })
+
+        $('#aboutView').load('templateViews/aboutView.html', function () {
+            //$(this).trigger('create').trigger('refresh');
+        })
+
+        $('#aboutProgramView').load('templateViews/aboutProgramView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        })
+
+        $('#termsView').load('templateViews/termsView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        })
+
+        $('#sendFeedbackView').load('templateViews/sendFeedbackView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        })
+
+        $('#setNotificationsView').load('templateViews/setNotificationsView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        })
+
+        $('#confirmQuitDateView').load('templateViews/confirmQuitDateView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        })
+
+		$('#smokingAgainView').load('templateViews/smokingAgainView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        });
+        
+		$('#urgesView').load('templateViews/urgesView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        });
+
+        $('#editQuitDateView').live('pageinit', function () {
+            $('#editQuitDateView').load('templateViews/editQuitDateView.html', function () {
+                $(this).trigger('create').trigger('refresh');
+                ko.applyBindings(new Step1CompletedViewModel(AppViewModel), $('#editQuitDateView')[0]);
+            });
+        });
+
+        $('#editCostView').live('pageinit', function () {
+            ko.applyBindings(new Step2CompletedViewModel(AppViewModel), $('#editCostView')[0]);
+        });
+
+        $('#editReasonsView').live('pageinit', function () {
+            ko.applyBindings(new Step3CompletedViewModel(AppViewModel), $('#editReasonsView')[0]);
+        });
+
+        $('#confirmQuitDateView').live('pageinit', function () {
+            var viewModel = new ConfirmQuitDateViewModel(AppViewModel);
+            viewModel.initialize();
+            ko.applyBindings(viewModel, $('#confirmQuitDateView')[0]);
+        });
+
+        $('#aboutView').live('pageinit', function () {
+            ko.applyBindings(new AboutViewModel(), $('#aboutView')[0]);
+            $(this).trigger('create').trigger('refresh');
+        });
+
+        $('#aboutProgramView').live('pageinit', function () {
+            ko.applyBindings(new AboutProgramViewModel(), $('#aboutProgramView')[0]);
+        });
+
+        $('#termsView').live('pageinit', function () {
+            ko.applyBindings(new TermsViewModel(), $('#termsView')[0]);
+        });
+
+        $('#sendFeedbackView').live('pageinit', function () {
+            ko.applyBindings(new SendFeedbackViewModel(), $('#sendFeedbackView')[0]);
+        });
+
+        $('#quitTipDetailView').load('templateViews/quitTipDetailView.html', function () {
+            $(this).trigger('create').trigger('refresh');
+        })
+		
+		$('#congratulationsView').load('templateViews/congratulationsView.html', function () {
+            	$(this).trigger('create').trigger('refresh');
+        	});
+
+        //
+
+        $('#pickDateView').live('pageinit', function () {
+            ko.applyBindings(new PickDateViewModel(AppViewModel), $('#pickDateView')[0]);
+        });
+
+        $('#setReasonToQuitView').live('pageinit', function () {
+            var setReasonToQuitViewModel = new SetReasonToQuitViewModel(AppViewModel);
+            setReasonToQuitViewModel.initialize();
+            ko.applyBindings(setReasonToQuitViewModel, $('#setReasonToQuitView')[0]);
+            $('#setReasonToQuitView').trigger('create').trigger('refresh');
+        });
+
+        $('#setCostSavingView').live('pageinit', function () {
+            var setCostSavingViewModel = new SetCostSavingViewModel(AppViewModel);
+            setCostSavingViewModel.initialize();
+            ko.applyBindings(setCostSavingViewModel, $('#setCostSavingView')[0]);
+        });
+
+        $('#setNotificationsView').live('pageinit', function () {
+				$('#setNotificationsView').load('templateViews/setNotificationsView.html',function(){
+                $(this).trigger('create').trigger('refresh');
+				var viewModel = new SetNotificationsViewModel(AppViewModel);
+				viewModel.initialize();
+            	ko.applyBindings(viewModel, $('#setNotificationsView')[0]);
+            });
+        });
+
+        $('#congratulationsView').live('pageinit', function () {
+            AppViewModel.initialize();      
+            ko.applyBindings(new QuitTipsViewModel(AppViewModel), $('#altTipsView')[0]);
+            ko.applyBindings(new CongratulationsViewModel(), $('#congratulationsView')[0]);
+        });
+		
+		$("[data-role=header]").fixedtoolbar({ tapToggle: false });
+		
+		verifyQuitDate();
+       
+    });
+
+}
+document.addEventListener("deviceready", onDeviceReady);
+
+</script>
+<body>
+	<div id="mainQuitDashBoardView" data-role="page">
+		
+		 <table class="nav_bar">
+		    <tr align="center">
+			    <td width="44" >
+			    	<a href="#" data-bind="click: menuCommand" data-theme="" class="menu_button">
+	    		</a>
+			    </td>
+			    <td><span class="c1_1" >Quitting Plan</span></td>
+			    <td width="44" ></td>
+		    </tr>
+	    </table>
+	   
+		<div style="margin-left: 4px; margin-right: 4px;">
+			<div style="background: #F0F0F0;">
+	    	<div style="margin-top: 4px;">
+	    		<a href="#" data-bind="click: viewAllTips" data-theme="" style="text-decoration: none;" >
+		    		<table width="100%">
+		    		<tr valign="middle">
+		    		<td width="20">
+		    			<img src="images/Quit_plan/Tips_Icon.png" /> 
+		    		</td>
+		    		<td><span class="c8_0">TIPS</span></td>
+		    		<td> </td>
+			    	<td width="60" align="right">
+				    			<span class="c8_2" >See All </span>
+				    			<img src="images/Android_UI/Arrow.png" /> 	
+			    	</td>
+		    		</tr>
+		    		</table>
+	    		</a>
+	    	</div>
+	    	<div align="center">
+	    	<div style="margin-top:4px; width:310px; height: 144px;">
+				  <section class="slider">
+			        <div class="flexslider carousel">
+			          <ul class="slides" data-bind="foreach: quitTips" >
+			  	    		<li style="border-style:solid; border-width:1px; border-color: #F0F0F0;" > 
+			  	    		<a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<img data-bind="attr:{src: thumb}" /> 
+			  	    		
+			  	    		<span data-bind="text: title" style="position: absolute; z-index:100; top:106px;font-size:12px; line-height: 12px; width:130px; text-align:center;  color: black;" ></span>
+			  	    		<div data-bind="visible: isNew"  style="position: absolute; z-index:100; top:0px; width:50px; height:50px;margin-left:96px;">
+			  	    			<img  src="images/Tips/New_Label.png" width="50" height="50" />
+			  	    		</div>
+			  	    		</a>
+			  	    		</li>
+			          </ul>
+			        </div>
+			      </section>
+	    	</div>
+	    	</div>
+	    	</div>
+	    	<div data-bind="visible: missedText().length == 0" style="margin-top: 10px;">
+	    	<a href="#editQuitDateView" data-theme="" >
+	    		<table width="100%">
+	    		<tr>
+	    		<td width="190">
+		    		<table>
+		    		<tr>
+		    		<td width="20">
+			    		<img src="images/Quit_plan/Quit_Date_Icon.png" /> 
+			    	</td>
+			    	<td >	
+			    		<span class="c8_0" >QUIT DATE</span>
+		    		</td>
+		    		</tr>
+		    		<tr>
+		    		<td colspan="2">
+		    			<span style="font-size:12px; color: black;" data-bind="text: quitDateText" ></span>
+		    		</td>
+		    		</tr>
+		    		</table>
+	    		</td>
+	    		<td >
+	    			<table style="background:url(images/Quit_plan/Artwork_1.png) no-repeat;"  width="114" height="29" >
+	    			<tr  align="center">
+	    			<td>
+		    		<span style="font-size:14px; color: white;" data-bind="text: daysLeft" ></span>
+		    		</td>
+		    		</tr>
+		    		</table>
+	    		</td>
+	    		<td width="20" align="right" >
+	    			
+			    		<img src="images/Android_UI/Arrow.png" /> 
+			    		
+	    		</td>
+	    		</tr>
+	    		</table>
+	    	</a>
+	    	</div>
+	    	
+	    	<div data-bind="visible: missedText().length > 0" style="margin-top: 10px; ">
+	    	<a href="#editQuitDateView" data-theme="" >
+	    		<table width="100%">
+	    		<tr>
+	    		<td width="190">
+		    		<table>
+		    		<tr>
+		    		<td width="20">
+			    		<img src="images/Quit_plan/Quit_Date_Icon.png" /> 
+			    	</td>
+			    	<td >	
+			    		<span class="c8_0" >QUIT DATE</span>
+		    		</td>
+		    		</tr>
+		    		<tr>
+		    		<td colspan="2">
+		    			<span style="font-size:12px; color: black; text-decoration:line-through;" data-bind="text: quitDateText" ></span>
+		    		</td>
+		    		</tr>
+		    		</table>
+	    		</td>
+	    		<td >
+	    			<table style="background:url(images/Quit_plan/Artwork_2.png) no-repeat;"  width="81" height="29" >
+	    			<tr  align="center">
+	    			<td>
+		    		<span style="font-size:14px; color: white;" data-bind="text: daysLeft" ></span>
+		    		</td>
+		    		</tr>
+		    		</table>
+	    		</td>
+	    		<td width="20" >
+	    			
+			    		<img src="images/Android_UI/Arrow.png" /> 
+			    		
+	    		</td>
+	    		</tr>
+	    		</table>
+	    	</a>
+	    	<a style="margin-left:4px; text-decoration: none;" href="#editQuitDateView" data-theme="" ><span class="c8_6" > Set a new quit date</span></a>
+	    	</div>
+	    	
+	    	<div style="margin-top=10px">
+	    	<hr/>
+	    	</div>
+	    	
+	    	<div style="margin-top=10px">
+	    	<a href="#editCostView" data-theme="" >
+	    	<table>
+		    		<tr>
+		    		<td width="20">
+			    		<img src="images/Quit_plan/Cost_Savings_Icon.png" /> 
+			    	</td>
+			    	<td>	
+			    		<span class="c8_0" >SAVINGS CALCULATOR</span>
+		    		</td>
+		    		</tr>
+		    </table>
+		    <table width="100%">
+		    <tr>
+		    <td>
+		    <table width="100%" >
+			    <tr valign="bottom">
+				    <td><span class="c6_16">30 Days<span></td>
+				    <td><div class="dashed_line_2x"></div></td>
+			    	<td align="right">
+			    		<span class="c6_18" data-bind="text: costPerMonth" ></span>
+			    	</td>
+		    	</tr>
+	    	</table>
+	    	<table width="100%">
+		    	<tr valign="bottom">
+				    <td><span class="c6_16" >6 Months<span></td>
+				    <td><div class="dashed_line_2x"></div></td>
+			    	<td align="right">
+			    		<span class="c6_18" data-bind="text: costPer6Months" ></span>
+			    	</td>
+		    	</tr>
+	    	</table>
+	    	<table width="100%" >
+	    	<tr valign="bottom">
+		    	<td><span class="c6_16" >1 Year<span></td>
+			    <td><div class="dashed_line_2x"></div></td>
+		    	<td align="right">
+		    		<span class="c6_18" data-bind="text: costPerYear" ></span>
+		    	</td>
+	    	</tr>
+	    	</table>
+	    	</td>
+	    	<td width="20" align="right" >
+	    		
+	    			<img src="images/Android_UI/Arrow.png" /> 
+	    		
+	    	</td>
+	    	</tr>
+	    	</table>
+	    	</a>
+	    	</div>
+	    	<div style="margin-top=10px">
+	    	<hr/>
+	    	</div>
+	    	<div style="margin-top=10px">
+	    	<a href="#editReasonsView" data-theme=""  style="text-decoration: none;" >
+	    	<table width="100%">
+		    	<tr>
+			    	<td width="20">
+			    		<img src="images/Quit_plan/Reasons_to_Quit_Icon.png" />
+			    	</td>
+			    	<td>
+			    		<span class="c8_0" >REASONS TO QUIT</span>
+			    	</td>
+			    	<td> </td>
+			    	<td width="60" align="right">
+			    		
+			    			<span class="c8_2" >See All </span>
+			    			<img src="images/Android_UI/Arrow.png" /> 
+			    		
+			    	</td>
+		    	</tr>
+	    	</table>
+	    	</a>	
+	    	</div>
+	    	<div style="margin-top:10px;">
+	    		<div class="dashed_line"></div>
+	    		<table  width="100%" data-bind="foreach: quitReasons" >
+			            <tr><td> <td><img data-bind="attr:{src: image}" /> </td>
+	                    <td> <span class="c6_26" data-bind="text: description"></span> </td>
+			            </tr>
+			            <tr>
+						<td colspan="3">
+							<div class="dashed_line"></div>
+						</td>
+					</tr>
+			    </table>
+	    	</div>
+	    	
+	    </div>	
+	</div>
+
+	
+<div id="quitTipsView" data-role="page" >
+		<div data-role="header" data-position="fixed" data-fullscreen="true" data-theme="">
+		<table class="nav_bar">
+		    <tr align="center">
+			    <td width="44" ><a href="#" data-bind="click: gobackCommand" data-theme="" class="back_button"> </a></td>
+			    <td><span class="c1_1" >Tips</span></td>
+			    <td width="44" ></a></td>
+		    </tr>
+	    </table>
+	    </div>
+		<div align="center" style="margin-top:48px;">	
+	    	<div data-bind="foreach: allTips" class="ui-grid-a" >
+	    					<!-- ko if: ($index() % 2 == 0) -->
+			  	    		<div class="ui-block-a"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+	    					<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center">
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table>
+							</a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			  	    		<!-- ko if: ($index() % 2 != 0) -->
+			  	    		<div class="ui-block-b"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+			  	    		<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center" >
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table></a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			</div>
+		</div>
+		<div style="margin-top:8px; margin-bottom:8px;" align="center">
+			 <span class="c8_2" data-bind="text: smokeAgainDateText" ></span>
+		</div>
+		<div align="center" >
+		<div data-bind="foreach: previousTips" class="ui-grid-a" >
+	    					<!-- ko if: ($index() % 2 == 0) -->
+			  	    		<div class="ui-block-a"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+	    					<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center">
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table>
+							</a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			  	    		<!-- ko if: ($index() % 2 != 0) -->
+			  	    		<div class="ui-block-b"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+			  	    		<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center" >
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table></a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			</div>
+			</div>
+	</div>
+	
+	<div id="editQuitDateView" data-role="page">	
+	</div>
+	
+	<div id="pickDateView" data-role="page">
+	</div>
+	
+	<div id="editCostView" data-role="page">
+	</div>
+	
+	<div id="setCostSavingView" data-role="page">
+	</div>
+	
+	<div id="editReasonsView" data-role="page">
+	</div>
+	
+	<div id="setReasonToQuitView" data-role="page" >
+	</div>
+	
+	<div id="quitTipDetailView" data-role="page">
+	</div>
+	
+	<div id="setNotificationsView" data-role="page"  >
+	</div>
+	
+    <div id="aboutView" data-role="page">
+	</div>
+
+    <div id="aboutProgramView" data-role="page">
+	</div>
+	
+	<div id="termsView" data-role="page">
+	</div>
+	
+	<div id="sendFeedbackView" data-role="page"  >
+	</div>
+
+	<div id="confirmQuitDateView" data-role="page" >
+	</div>
+	
+	<div id="congratulationsView" data-role="page" >
+	</div>
+	
+	<div id="urgesView" data-role="page">	
+	</div>
+	
+	<div id="smokingAgainView" data-role="page">	
+	</div>
+	
+	<div id="altTipsView" data-role="page" >
+		<div data-role="header" data-position="fixed" data-fullscreen="true" data-theme="">
+		<table class="nav_bar">
+		    <tr align="center">
+			    <td width="44" ><a href="#" data-bind="click: gobackCommand" data-theme="" class="back_button"> </a></td>
+			    <td><span class="c1_1" >Tips</span></td>
+			    <td width="44" ></a></td>
+		    </tr>
+	    </table>
+	    </div>
+		<div align="center" style="margin-top:48px;">	
+	    	<div data-bind="foreach: allTips" class="ui-grid-a" >
+	    					<!-- ko if: ($index() % 2 == 0) -->
+			  	    		<div class="ui-block-a"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+	    					<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center">
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table>
+							</a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			  	    		<!-- ko if: ($index() % 2 != 0) -->
+			  	    		<div class="ui-block-b"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+			  	    		<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center" >
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table></a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			</div>
+		</div>
+		<div style="margin-top:8px; margin-bottom:8px;" align="center">
+			 <span class="c8_2" data-bind="text: smokeAgainDateText" ></span>
+		</div>
+		<div align="center" >
+		<div data-bind="foreach: previousTips" class="ui-grid-a" >
+	    					<!-- ko if: ($index() % 2 == 0) -->
+			  	    		<div class="ui-block-a"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+	    					<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center">
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table>
+							</a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			  	    		<!-- ko if: ($index() % 2 != 0) -->
+			  	    		<div class="ui-block-b"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+			  	    		<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center" >
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table></a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			</div>
+			</div>
+			</div>
+	<div id="menuView" data-role="page" data-theme="" style="background: #2D343B;" >
+	<ul>
+			<li class='active' ><a href="#" data-bind="click: menu0Command"><img src="images/Menu_Navigation/Menu_List_Icon_1.png" width="25" /><span class="menu_item_text"> Quitting Plan </span></a></li>
+			<li><a href="#" data-bind="click: menu1Command" ><table width="100%"><tr><td width="25"><img src="images/Menu_Navigation/Menu_List_Icon_2.png" width="25" /></td><td ><span class="menu_item_text">Tips</span></td><td width="100"> <table data-bind="visible: newTipsText().length > 0" width="85" height="30" style="background:url(images/Menu_Navigation/Menu_List_Tips_Artwork.png) no-repeat;" ><tr align="center"><td><span data-bind="text: newTipsText" ></span></td></tr></table></td></tr></table> </a></li>
+			<li><a href="#" data-bind="click: menu2Command" ><img src="images/Menu_Navigation/Menu_List_Icon_3.png" width="25" /> <span class="menu_item_text">Quit Date</span> </a></li>
+			<li><a href="#" data-bind="click: menu3Command" ><img src="images/Menu_Navigation/Menu_List_Icon_4.png" width="25" /> <span class="menu_item_text">Savings Calculator</span> </a></li>
+			<li><a href="#" data-bind="click: menu4Command" ><img src="images/Menu_Navigation/Menu_List_Icon_5.png" width="25" /><span class="menu_item_text"> Reasons to Quit</span> </a></li>
+			<li><a href="#" data-bind="click: menu5Command" ><img src="images/Menu_Navigation/Menu_List_Icon_6.png" width="25" /><span class="menu_item_text"> Notification Settings </span></a></li>
+			<li><a href="#" data-bind="click: menu6Command" ><img src="images/Menu_Navigation/Menu_List_Icon_7.png" width="25" /> <span class="menu_item_text">About Us </span></a></li>
+	</ul>		
+</div>
+	<script type="text/javascript" src="libs/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<table class="nav_bar">
+    <tr align="center">
+	    <td width="44" ><a href="#" data-bind="click: cancelCommand"  data-theme="" class="cancel_button"></td>
+	    <td><span class="c1_1" >Notification Settings</span></td>
+	    <td width="44" ><a href="#" data-theme="" data-bind="click: saveCommand" class="done_button" > </a></td>
+    </tr>
+</table>	
+<div style="margin-left:10px; margin-right:10px;">
+	<div style="margin-top:10px;">
+		<table width="100%" valign="bottom" data-role="button">
+    			<tr>
+    			<td width="200">
+    				<span class="c5_5">Daily Tips</span>
+    			</td>
+    			<td >
+    				<select name="notificationsToggle" id="notificationsToggle" data-role="slider" data-bind="value: isNotificationsEnabled" >
+						<option value="off">Off</option>
+						<option value="on">On</option>
+					</select>
+    			</td>
+    			</tr>
+    	</table>
+	</div>
+	<div style="margin-top:10px;">
+		<span class="c4_4">Please select the time of day you'd like to receive your daily tips.</span>
+	</div>
+	<div style="margin-top:10px;">
+		<span class="c5_5">Time of day</span>
+	</div>
+	<div style="margin-top:10px;">
+	<ul data-role="listview" data-inset="true" data-theme="" data-bind="foreach: notificationTimes">
+	    <li data-icon="false" ><a href="#" data-bind="click: $parent.clickOption" data-theme="" style="text-decoration: none;" >
+	    <table width="100%"><tr><td><span class="c5_5" data-bind="text: title" /> <span class="c4_4" data-bind="text: detail" /></td><td align="right" width="20"><img data-bind="visible: isUnChecked" src="images/Unchecked_Box.png" /><img data-bind="visible: isChecked" src="images/Checked_Box.png" /></td></tr></table></a>
+	    </li>
+	</ul>
+	</div>
+	
+</div>

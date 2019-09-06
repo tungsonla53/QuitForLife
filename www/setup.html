@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Q4L Mobile</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<link href="libs/jquery.mobile-1.2.0.min.css" rel="stylesheet" type="text/css" />
+	<script src="cordova-2.7.0.js" type="text/javascript" charset="utf-8" ></script>
+	<script src="libs/jquery-1.8.2.min.js" type="text/javascript"></script>
+	<script language=javascript>
+	    $(document).bind("mobileinit", function () {
+	        $.mobile.ajaxEnabled = false;
+	        $.mobile.defaultPageTransition = 'none';
+	        $.mobile.defaultDialogTransition = 'none';
+	        $.mobile.useFastClick = true;
+	        $.mobile.allowCrossDomainPages = true;
+	    });
+ 	</script>
+	<script src="libs/jquery.mobile-1.2.0.min.js" type="text/javascript"></script>
+	<script src="libs/statusbarnotification.js" type="text/javascript"></script>
+	<script src="libs/LocalNotification.js" type="text/javascript"></script>
+	<script src="libs/dFormat.js" type="text/javascript"></script>
+	<script src="libs/knockout-2.1.0.debug.js" type="text/javascript"></script>
+	<script src="libs/PushNotification.js" type="text/javascript"></script>
+	<script src="libs/MusicPlayerLauncher.js" type="text/javascript"></script>
+	<script src="libs/analytics.js" type="text/javascript"></script>
+	<script src="AppModels.js" type="text/javascript"></script>
+    <script src="viewModels/IntroViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step1ViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step2ViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step3ViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/PickDateViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/PickDateTimeViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/QuitTipsViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/DetailTipViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/SetReasonToQuitViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/SetCostSavingViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/CongratulationsViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step1CompletedViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step1PostquitCompletedViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step2CompletedViewModel.js" type="text/javascript"></script>
+    <script src="viewModels/Step3CompletedViewModel.js" type="text/javascript"></script>
+    <script src="AppViewModel.js" type="text/javascript"></script>
+    <link href="q4l_ios.css" rel="stylesheet" type="text/css" />
+</head>
+<script>
+    function onDeviceReady() {
+
+        $(document).ready(function () {
+
+        	try {
+            	window.plugins.analytics.trackViews(document);
+	           	window.plugins.analytics.trackPageView("/setup.html");
+        	} catch (ex) { console.log(ex); }
+
+            AppViewModel.initialize();
+
+            ko.applyBindings(new IntroViewModel(AppViewModel), $('#introView')[0]);
+
+			$('#pickDateView').load('templateViews/pickDateView.html', function () {
+            	$(this).trigger('create').trigger('refresh');
+        	});
+        	
+        	$('#pickDateTimeView').load('templateViews/pickDateTimeView.html', function () {
+            	$(this).trigger('create').trigger('refresh');
+        	})
+        
+			$('#congratulationsView').load('templateViews/congratulationsView.html', function () {
+            	$(this).trigger('create').trigger('refresh');
+        	});
+        
+        	$('#setReasonToQuitView').load('templateViews/setReasonToQuitView.html', function () {
+            	$(this).trigger('create').trigger('refresh');
+        	});
+        	
+        	$('#quitTipDetailView').load('templateViews/quitTipDetailView.html', function () {
+            	$(this).trigger('create').trigger('refresh');
+        	})
+        	
+        	$('#setCostSavingView').load('templateViews/setCostSavingView.html', function () {
+            	$(this).trigger('create').trigger('refresh');
+        	});
+        
+        
+            $('#step1View').live('pageinit', function () {
+                var viewModel = new Step1ViewModel(AppViewModel);
+                ko.applyBindings(viewModel, $('#step1View')[0]);
+            });
+
+            $('#step1PostquitView').live('pageinit', function () {
+                ko.applyBindings(new Step1ViewModel(AppViewModel), $('#step1PostquitView')[0]);
+            });
+
+            $('#step2View').live('pageinit', function () {
+                ko.applyBindings(new Step2ViewModel(AppViewModel), $('#step2View')[0]);
+            });
+
+            $('#step3View').live('pageinit', function () {
+                ko.applyBindings(new Step3ViewModel(AppViewModel), $('#step3View')[0]);
+            });
+
+            $('#confirmStatusView').live('pageinit', function () {
+                ko.applyBindings(new ConfirmStatusViewModel(), $('#confirmStatusView')[0]);
+            });
+
+            $('#congratulationsView').live('pageinit', function () {
+                AppViewModel.initialize();
+                ko.applyBindings(new CongratulationsViewModel(), $('#congratulationsView')[0]);
+                ko.applyBindings(new QuitTipsViewModel(AppViewModel), $('#quitTipsView')[0]);
+            });
+
+            $('#pickDateView').live('pageinit', function () {
+                ko.applyBindings(new PickDateViewModel(AppViewModel), $('#pickDateView')[0]);
+            });
+
+            $('#pickDateTimeView').live('pageinit', function () {
+                ko.applyBindings(new PickDateTimeViewModel(AppViewModel), $('#pickDateTimeView')[0]);
+            });
+
+            $('#setReasonToQuitView').live('pageinit', function () {
+                var setReasonToQuitViewModel = new SetReasonToQuitViewModel(AppViewModel);
+                setReasonToQuitViewModel.initialize();
+                ko.applyBindings(setReasonToQuitViewModel, $('#setReasonToQuitView')[0]);
+                $('#setReasonToQuitView').trigger('create').trigger('refresh');
+            });
+
+            $('#setCostSavingView').live('pageinit', function () {
+                var setCostSavingViewModel = new SetCostSavingViewModel(AppViewModel);
+                setCostSavingViewModel.initialize();
+                ko.applyBindings(setCostSavingViewModel, $('#setCostSavingView')[0]);
+                $('#setCostSavingView').trigger('create').trigger('refresh');
+            });
+
+            $('#step1CompletedView').live('pageinit', function () {
+                ko.applyBindings(new Step1CompletedViewModel(AppViewModel), $('#step1CompletedView')[0]);
+            });
+
+            $('#step1PostquitCompletedView').live('pageinit', function () {
+                ko.applyBindings(new Step1PostquitCompletedViewModel(AppViewModel), $('#step1PostquitCompletedView')[0]);
+            });
+
+            $('#step2CompletedView').live('pageinit', function () {
+                ko.applyBindings(new Step2CompletedViewModel(AppViewModel), $('#step2CompletedView')[0]);
+            });
+
+            $('#step3CompletedView').live('pageinit', function () {
+                ko.applyBindings(new Step3CompletedViewModel(AppViewModel), $('#step3CompletedView')[0]);
+            });
+            
+            $('#pickDateView').live('pageinit', function () {
+            	ko.applyBindings(new PickDateViewModel(AppViewModel), $('#pickDateView')[0]);
+        	});
+        
+			$('#pickDateTimeView').live('pageinit', function () {
+            	ko.applyBindings(new PickDateTimeViewModel(AppViewModel), $('#pickDateTimeView')[0]);
+        	});
+			
+			$('#setCostSavingView').live('pageinit', function () {
+	            var setCostSavingViewModel = new SetCostSavingViewModel(AppViewModel);
+	            setCostSavingViewModel.initialize();
+	            ko.applyBindings(setCostSavingViewModel, $('#setCostSavingView')[0]);
+        	});
+
+            if (AppViewModel.completedStep().length > 0) {
+                var nextIndex = parseInt(AppViewModel.completedStep()) + 1;
+                $.mobile.changePage(appViewPath[nextIndex]);
+            }
+            
+			$("[data-role=header]").fixedtoolbar({ tapToggle: false });
+			
+			
+        });
+    }
+
+    document.addEventListener("deviceready", onDeviceReady);
+
+</script>
+<body>
+
+	<div id="introView" data-role="page" >
+	    <div align="center" style="margin-left:30px;margin-right:30px;">
+	    	<div style="margin-top:50px;">
+	    		<img src="images/Setup/Step_0_Welcome_Artwork.png"  /> 
+	    	</div>
+	    	<div style="margin-top:40px;">
+	    		<span class="c3_3" >Welcome!</span>
+	    	</div>
+	    	<div style="margin-top:30px;">
+	    		<span class="c3_4" >This app will help you <u>prepare to quit</u> and/or <u>stay quit</u> in 3 simple steps!</span>
+	    	</div>
+	    	<div style="margin-top:35px;">
+	    		<a href="#" data-theme="" data-bind="click: startCommand">
+	    			<img src="images/CTA_Buttons/Get_Started_Button.png" width="260" /> 
+	    		</a>	
+	    	</div>
+	    </div>
+	</div>
+	
+	<div id="step1View" data-role="page" >
+	    <table class="nav_bar">
+		    <tr align="center">
+			    <td width="50" ></td>
+			    <td><span class="c1_1" >Step 1</span></td>
+			    <td width="50" ></td>
+		    </tr>
+	    </table>	
+	    <div align="center" style="margin-left:30px;margin-right:30px;">
+	    	<div style="margin-top:20px;">
+	    		<img src="images/Setup/Step_1_Artwork_1.png"  /> 
+	    	</div>
+	    	<div style="margin-top:20px;">
+	    		<span class="c4_3" >When will you quit smoking?</span>
+	    	</div>
+	    	<div style="margin-top:10px;">
+	    		<span class="c4_4" >Setting a quit date shows you are serious about quitting and helps you work toward a specific date.</span>
+	    	</div>
+	    	<div style="margin-top:30px;">
+	    		<a href="#" data-theme="" data-bind="click: setQuitDateCommand" >
+	    			<img src="images/CTA_Buttons/Pick_a_Date_Button.png" width="260"  /> 
+	    		</a>	
+	    	</div>	
+	    </div>
+	</div>
+	
+	<div id="step1PostquitView" data-role="page" >
+	    <table class="nav_bar">
+		    <tr align="center">
+			    <td width="50" ></td>
+			    <td><span class="c1_1" >Step 1</span></td>
+			    <td width="50" ></td>
+		    </tr>
+	    </table>	
+	    <div align="center" style="margin-left:30px;margin-right:30px;">
+	    	<div style="margin-top:20px;">
+	    		<img src="images/Setup/Step_1_Artwork_1.png"  /> 
+	    	</div>
+	    	<div style="margin-top:20px;">
+	    		<span class="c4_3" >What day did you quit smoking?</span>
+	    	</div>
+	    	<div style="margin-top:10px;">
+	    		<span class="c4_4" >Enter your Quit Date to see how many days you’ve added to your life.</span>
+	    	</div>
+	    	<div style="margin-top:30px;">
+	    		<a href="#" data-theme="" data-bind="click: setQuitDateCommand" >
+	    			<img src="images/CTA_Buttons/ConfirmQuitDate_Button.png" width="260"  /> 
+	    		</a>	
+	    	</div>	
+	    </div>
+	</div>
+	
+	<div id="step1CompletedView" data-role="page" >
+	     <table class="nav_bar">
+		    <tr align="center">
+			    <td width="50" ></td>
+			    <td><span class="c1_1" >Step 1</span></td>
+			    <td width="50" ><a href="#step2View" data-theme="" class="next_button" > </a></td>
+		    </tr>
+	    </table>	
+	    <div align="center">
+	    <div style="margin-top:20px;">
+	    	<table background="images/Setup/Step_1_Artwork_2.png" width="202" height="177" >
+	    	<tr>
+	    	<td align="center"  valign="bottom">
+	    	<span class="c6_2" data-bind="text: quitMonthText" ></span>
+	    	</td>
+	    	</tr>
+	    	<tr>
+	    	<td align="center">
+	    	<span class="c6_3" data-bind="text: quitDayText" ></span>
+	    	</td>
+	    	</tr>
+	    	</table>
+	    	</div>
+	    	<div style="margin-top:10px;" >
+	    		<span class="c6_4" data-bind="text: quitDateText" ></span>
+	    	</div>
+	    	<div style="margin-top:40px;">
+	    	<table background="images/Setup/Step_1_Artwork_3.png" width="189" height="46">
+	    	<tr>
+	    	<td align="center" >
+	    	<span class="c6_5" data-bind="text: daysLeft" ></span>
+	    	</td>
+	    	</tr>
+	    	</table>
+	    	</div>
+	    </div>
+	</div>
+	
+	<div id="step1PostquitCompletedView" data-role="page" >
+	    <table class="nav_bar">
+		    <tr align="center">
+			    <td width="44" ></td>
+			    <td><span class="c1_1" >Step 1</span></td>
+			    <td width="44" ><a href="#step2View" data-theme="" class="next_button" > </a></td>
+		    </tr>
+	    </table>
+	    <div align="center">
+	    <div style="margin-top:20px;">
+	    	<table cellpadding="0" cellspacing="0" background="images/Quit_Date/Post_Quit_Date_Artwork.png" width="230" height="200" >
+			<tr>
+			<td align="center" valign="bottom" height="74" >
+			<span class="c6_2" data-bind="text: quitMonthText" ></span>
+			</td>
+			</tr>
+			<tr>
+			<td align="center">
+			<span class="c6_3" data-bind="text: quitDayText" ></span>
+			</td>
+			</tr>
+			</table>
+	    	</div>
+	    	<div style="margin-top:10px;" >
+	    		<span class="c6_4" data-bind="text: quitDateText" ></span>
+	    	</div>
+	    	<div style="margin-top:40px;">
+	    	<table width="280">
+	    	<tr valign="bottom" >
+	    	<td><span class="c6_8" >Time Quit</span></td>
+	    	<td><div class="dashed_line" ></div></td>
+	    	<td>
+	    		<div style="font-size:12px; color: black;" data-bind="html: daysQuit" ></div>
+	    	</td>
+	    	</tr>
+	    	</table>
+	    	</div>
+	    </div>
+	</div>
+	
+	<div id="step2View" data-role="page" >
+	    <table class="nav_bar">
+		    <tr align="center">
+			    <td width="50" ></td>
+			    <td><span class="c1_1" >Step 2</span></td>
+			    <td width="50" ></td>
+		    </tr>
+	    </table>
+	    <div align="center" style="margin-left:30px;margin-right:30px">
+	    	<div style="margin-top:30px;">
+	    		<img src="images/Setup/Step_2_Artwork_1.png"  /> 
+	    	</div>
+	    	<div style="margin-top:20px;">
+	    		<span class="c4_3" >How much do you spend on smoking each day?</span>
+	    	</div>
+	    	<div style="margin-top:10px;">
+	    		<span class="c4_4" >You'll be surprised to see how much <br/>money you can save for other things<br/>once you've quit.</span>
+	    	</div>
+	    	<div style="margin-top: 30px;">
+	    		<a href="#" data-theme="" data-bind="click: setCostSavingCommand" >
+	    			<img src="images/CTA_Buttons/Calculate_Savings_Button.png" width="260"  /> 
+	    		</a>	
+	    	</div>	
+	    </div>
+	</div>
+	
+	<div id="step2CompletedView" data-role="page" >
+	     <table class="nav_bar">
+		    <tr align="center">
+			    <td width="50" ></td>
+			    <td><span class="c1_1" >Step 2</span></td>
+			    <td width="50" ><a href="#step3View" data-theme="" class="next_button" > </a></td>
+		    </tr>
+	    </table>
+	    <div align="center">
+	    	<div style="margin-top:20px;">
+	    	<table background="images/Setup/Step_2_Artwork_2.png" width="203" height="158" >
+	    		<tr>
+	    		<td align="center" >
+	    			<span class="c6_13" data-bind="text: costSaving" ></span>
+	    		</td>
+	    		</tr>
+	    	</table>
+	    	</div>
+	    	<div style="margin-top:40px;">
+	    		<span class="c6_15" >Potential Savings</span>
+	    	</div>
+	    	<div style="margin-top:10px;">
+	    		<table width="260">
+	    			<tr valign="bottom">
+	    			<td>
+	    			<span class="c6_16" >30 Days</span>
+	    			</td>
+	    			<td>
+	    			<div class="dashed_line_2x" > </div>
+	    			</td>
+	    			<td align="right" >
+	    			<span class="c6_18" data-bind="text: costPerMonth" ></span>
+	    			</td>
+	    			</tr>
+	    		</table>
+	    	</div>
+	    	
+	    	<div style="margin-top:4px;">
+	    		<table width="260">
+	    			<tr valign="bottom">
+	    			<td>
+	    			<span class="c6_16" >6 Months</span>
+	    			</td>
+	    			<td>
+	    			<div class="dashed_line_2x"></div>
+	    			</td>
+	    			<td align="right">
+	    			<span class="c6_18" data-bind="text: costPer6Months" ></span>
+	    			</td>
+	    			</tr>
+	    		</table>
+	    	</div>
+	    	<div style="margin-top:4px;">
+	    		<table width="260">
+	    			<tr valign="bottom">
+	    			<td>
+	    			<span class="c6_16" >1 Year</span>
+	    			</td>
+	    			<td>
+	    			<div class="dashed_line_2x"></div>
+	    			</td>
+	    			<td align="right">
+	    			<span class="c6_18" data-bind="text: costPerYear" ></span>
+	    			</td>
+	    			</tr>
+	    		</table>
+	    	</div>
+	    	<div style="margin-top:10px;">
+	    		<span class="c6_19" >Cost per pack: </span><span class="c6_20" data-bind="text: pricePerPackText" ></span> 
+	    		<span class="c6_19">Cigarettes per day: </span><span class="c6_20" data-bind="text: cigarettesPerDay" ></span>
+	    	</div>	
+	    </div>
+	</div>
+	
+	<div id="step3View" data-role="page" >
+	     <table class="nav_bar">
+		    <tr align="center">
+			    <td width="50" ></td>
+			    <td><span class="c1_1" >Step 3</span></td>
+			    <td width="50" ></td>
+		    </tr>
+	    </table>
+	    <div align="center" style="margin-left:30px;margin-right:30px;">
+	    	<div style="margin-top:30px;">
+	    		<img src="images/Setup/Step_3_Artwork_1.png"  /> 
+	    	</div>
+	    	<div style="margin-top:20px;">
+	    		<span class="c4_3" >What are your reasons for quitting?</span>
+	    	</div>
+	    	<div style="margin-top:10px;">
+	    		<span class="c4_4" >Select your reasons from this list and<br/>refer back to them when you need help<br/>staying focused and motivated.</span>
+	    	</div>
+	    	<div style="margin-top: 30px;">
+	    		<a href="#" data-theme="" data-bind="click: setReasonsCommand" >
+	    			<img src="images/CTA_Buttons/Choose_Reasons_Button.png" width="260" /> 
+	    		</a>	
+	    	</div>	
+	    </div>
+	</div>
+	
+	<div id="step3CompletedView" data-role="page" >
+	    <table class="nav_bar">
+		    <tr align="center">
+			    <td width="44" > </td>
+			    <td><span class="c1_1" >Step 3</span></td>
+			    <td width="44" ><a href="#" data-bind="click: nextCommand" data-theme=""  class="next_button" > </a></td>
+		    </tr>
+	    </table>
+	    <div align="center">
+	    	<div style="margin-top:30px;">
+		    	<table background="images/Setup/Step_3_Artwork_2.png" width="94" height="129" >
+		    		<tr>
+		    		<td align="center" >
+		    			<span class="c6_22" data-bind="text: numberOfReasons" ></span>
+		    		</td>
+		    		</tr>
+		    	</table>
+	    	</div>
+	    	<div style="margin-top:20px;">
+	    		<div class="dashed_line" > </div>
+		    	<table  width="100%" data-bind="foreach: quitReasons" >
+			            <tr><td> <td><img data-bind="attr:{src: image}" width="50" height="50" style="margin-left:10px;margin-right:10px" /> </td>
+	                    <td> <span class="c6_26" data-bind="text: description"></span> </td>
+			            </tr>
+			            <tr>
+						<td colspan="3">
+							<div class="dashed_line" > </div>
+						</td>
+					</tr>
+			    </table>
+		    </div>	
+	    </div>
+	</div>
+	
+	<div id="quitTipsView" data-role="page">
+		<table class="nav_bar">
+		    <tr align="center">
+			    <td width="44" ><a href="#congratulationsView" data-theme=""  class="back_button" > </a></td>
+			    <td><span class="c1_1" >Tips</span></td>
+			    <td width="44" ></td>
+		    </tr>
+	    </table>	
+		<div align="center" >	
+	    	<div data-bind="foreach: allTips" class="ui-grid-a" >
+	    					<!-- ko if: ($index() % 2 == 0) -->
+			  	    		<div class="ui-block-a"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+	    					<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center">
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table>
+							</a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			  	    		<!-- ko if: ($index() % 2 != 0) -->
+			  	    		<div class="ui-block-b"> <a href="#" data-bind="click: $parent.viewTip" data-theme="" style="text-decoration: none;" > 
+			  	    		<table width="153" height="144" cellpadding="0" cellspacing="0" data-bind="attr:{background: thumb}" class="tip_thumb_table" >
+			  	    		<tr height="102" valign="top"  align="right" >
+	    					<td>
+	    					<img data-bind="visible: isNew" src="images/Tips/New_Label.png" />
+	    					</td>
+	    					</tr>
+	    					<tr valign="top" align="center" >
+	    					<td >
+	    					<span data-bind="text: titleT" class="tip_thumb_text" />
+	    					</td>
+	    					</tr>
+	    					</table></a>
+			  	    		</div>
+			  	    		<!-- /ko -->
+			</div>
+		</div>
+	</div>
+	
+	<div id="pickDateView" data-role="page" >
+	</div>
+	
+	<div id="pickDateTimeView" data-role="page" >
+	</div>
+	
+	<div id="setCostSavingView" data-role="page" >
+	</div>
+	
+	<div id="setReasonToQuitView" data-role="page">
+	</div>
+	
+	<div id="quitTipDetailView" data-role="page">
+	</div>
+	
+	<div id="congratulationsView" data-role="page" >
+	</div>
+</body>
+</html>

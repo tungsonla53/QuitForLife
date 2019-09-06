@@ -1,0 +1,37 @@
+	    <div data-role="header" data-position="fixed" data-fullscreen="true" data-theme="">
+	    <table class="nav_bar">
+		    <tr align="center">
+			    <td width="44" ><a href="#" data-bind="click: gobackCommand" data-theme="" class="back_button"></td>
+			    <td><span class="c1_1" >Reasons To Quit</span></td>
+			    <td width="44" ><a href="#setReasonToQuitView" data-theme="" class="edit_button" > </a></td>
+		    </tr>
+	    </table>
+	    </div>	
+	    <div align="center" style="margin-top:48px;" >
+	    	<div style="margin-top:20px;">
+		    	<table background="images/Setup/Step_3_Artwork_2.png" width="94" height="129" >
+		    		<tr>
+		    		<td align="center" >
+		    			<span class="c6_22" data-bind="text: numberOfReasons" ></span>
+		    		</td>
+		    		</tr>
+		    	</table>
+	    	</div>
+	    	<div style="margin-top:20px;">
+	    		<div class="dashed_line" > </div>
+		    	<table  width="100%" data-bind="foreach: quitReasons" >
+			            <tr><td> <td><img data-bind="attr:{src: image}" width="50" height="50" style="margin-left:10px;margin-right:10px" /> </td>
+	                    <td> <span class="c6_26" data-bind="text: description"></span> </td>
+			            </tr>
+			            <tr>
+						<td colspan="3">
+							<div class="dashed_line" > </div>
+						</td>
+					</tr>
+			    </table>
+		    </div>	
+	    </div>
+	
+	
+	
+	

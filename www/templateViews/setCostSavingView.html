@@ -1,0 +1,46 @@
+
+<table class="nav_bar" >
+	<tr align="center">
+		<td width="44" ><div data-bind="visible: canCancel" ><a href="#" data-theme="" data-bind="click: cancelCommand" class="cancel_button"></a></div></td>
+		<td><span class="c1_1" >Calculate Savings</span></td>
+		<td width="44" ><a href="#" data-theme="" data-bind="click: saveCommand" class="done_button" > </a></td>
+	</tr>
+</table>
+	
+<div style="margin-left:10px; margin-right:10px;">
+	<div style="margin-top:20px;" >
+	    <span class="c4_4" data-bind="text: introText" ></span>
+	</div>
+	<div>
+    <table width="100%" valign="bottom">
+    	<tr>
+    	<td>
+    		<span class="c5_5">Cost Per Pack</span>
+    	</td>
+    	<td>
+    		<input style="width:70px;" maxlength="5"  type="number" step="any" min="1"  max="99" data-bind="value: pricePerPack" />
+    	</td>
+    	</tr>
+    	<tr>
+				<td colspan="2">
+					<div class="dashed_line" > </div>
+				</td>
+		</tr>
+    	<tr>
+    	<td>
+    		<span class="c5_5">Cigarettes Per Day</span>
+    	</td>
+    	<td>
+    	<input  style="width:70px;" maxlength="2" type="number" min="1"  max="99"  data-bind="value: cigarettesPerDay" />
+    	</td>
+    </tr>
+    <tr>
+		<td colspan="2">
+			<div class="dashed_line" > </div>
+		</td>
+	</tr>
+    </table>  
+    </div>  	
+</div>
+	
+	
